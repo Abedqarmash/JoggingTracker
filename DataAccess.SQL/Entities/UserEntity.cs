@@ -2,7 +2,7 @@
 
 namespace DataAccess.SQL.Entities
 {
-    public class UserEntity : IdentityUser<int>
+    public class UserEntity : IdentityUser
     {
         /// <summary>
         /// Created By.

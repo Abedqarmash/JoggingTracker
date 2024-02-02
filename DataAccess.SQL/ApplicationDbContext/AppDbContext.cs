@@ -2,10 +2,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using DataAccess.SQL.Enums;
 
 namespace DataAccess.SQL.ApplicationDbContext
 {
-    public class AppDbContext : IdentityDbContext<UserEntity, IdentityRole<int>, int>
+    public class AppDbContext : IdentityDbContext<UserEntity, IdentityRole, string>
     {
         public AppDbContext()
         {
@@ -20,24 +21,38 @@ namespace DataAccess.SQL.ApplicationDbContext
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.HasDefaultSchema("security");
             builder.Entity<UserEntity>(entity =>
             {
                 entity.ToTable(name: "Users");
-                entity.Property(i => i.PhoneNumber).IsRequired(true);
                 entity.Property(i => i.Email).IsRequired(true);
             });
             builder.Entity<IdentityRole>(entity => { entity.ToTable(name: "Roles"); });
-            builder.Entity<IdentityUserClaim<int>>(entity => { entity.ToTable(name: "UserClaims"); });
-            builder.Entity<IdentityUserRole<int>>(entity => { entity.ToTable(name: "UserRoles"); });
-            builder.Entity<IdentityUserLogin<int>>(entity => { entity.ToTable(name: "UserLogins"); });
-            builder.Entity<IdentityUserToken<int>>(entity => { entity.ToTable(name: "UserTokens"); });
-            builder.Entity<IdentityRoleClaim<int>>(entity => { entity.ToTable(name: "RoleClaims"); });
+            builder.Entity<IdentityUserClaim<string>>(entity => { entity.ToTable(name: "UserClaims"); });
+            builder.Entity<IdentityUserRole<string>>(entity => { entity.ToTable(name: "UserRoles"); });
+            builder.Entity<IdentityUserLogin<string>>(entity => { entity.ToTable(name: "UserLogins"); });
+            builder.Entity<IdentityUserToken<string>>(entity => { entity.ToTable(name: "UserTokens"); });
+            builder.Entity<IdentityRoleClaim<string>>(entity => { entity.ToTable(name: "RoleClaims"); });
+
+            SeedRoles(builder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=.;Database=Jogging_Tracker;Trusted_Connection=true; MultipleActiveResultSets=true");
+        }
+
+        private void SeedRoles(ModelBuilder modelBuilder)
+        {
+            foreach (var roleName in Enum.GetNames(typeof(RoleType)))
+            {
+                var role = new IdentityRole
+                {
+                    Name = roleName,
+                    NormalizedName = roleName.ToUpper()
+                };
+
+                modelBuilder.Entity<IdentityRole>().HasData(role);
+            }
         }
 
         public DbSet<JoggingEntity> JoggingEntities { get; set; }

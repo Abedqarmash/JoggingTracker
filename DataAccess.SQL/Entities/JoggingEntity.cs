@@ -29,7 +29,7 @@ namespace DataAccess.SQL.Entities
         /// Foreign key for user
         /// </summary>
         [Required]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public UserEntity User { get; set; } = default!;
 
 
