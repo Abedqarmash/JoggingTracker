@@ -140,9 +140,13 @@ namespace BusinessLogic.Users
                 throw new InvalidModelException(nameof(model), updatingResult.Errors.FirstOrDefault()!.Description);
             }
 
-            var roles = await _userManager.GetRolesAsync(updateModel);
-            var (token, _) = GenerateJwtToken(updateModel, roles);
-            updatingResult = await _userManager.ResetPasswordAsync(updateModel, token, model.Password);
+            updatingResult = await _userManager.RemovePasswordAsync(updateModel);
+            if (updatingResult.Errors.Any())
+            {
+                throw new InvalidModelException(nameof(model), updatingResult.Errors.FirstOrDefault()!.Description);
+            }
+
+            updatingResult = await _userManager.AddPasswordAsync(updateModel, model.Password);
 
             if (updatingResult.Errors.Any())
             {
@@ -151,7 +155,7 @@ namespace BusinessLogic.Users
 
             var userEntity = (await _userManager.FindByEmailAsync(model.Email));
 
-            return userEntity.ToResource();
+            return userEntity.ToResource(await _userManager.GetRolesAsync(userEntity));
         }
 
         public async Task<IEnumerable<string>> GrantPermission(string email, IEnumerable<RoleType> roles)
