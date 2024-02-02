@@ -28,7 +28,7 @@ namespace API.Controllers
         ///  Get list of users.
         /// </summary>
         /// <remarks>Get filtered list of users.</remarks>
-        /// <param name="model"></param>
+        /// <param name="filter"></param>
         /// <response code="200">users are returned.</response>
         /// <response code="400">Bad request.</response>
         /// <response code="401">Unauthorized.</response>
@@ -48,10 +48,28 @@ namespace API.Controllers
         }
 
         /// <summary>
+        ///  Get user by id.
+        /// </summary>
+        /// <remarks>Get user by id.</remarks>
+        /// <param name="id"></param>
+        /// <response code="200">users are returned.</response>
+        /// <response code="400">Bad request.</response>
+        /// <response code="401">Unauthorized.</response>
+        /// <response code="403">Forbidden.</response>
+        /// <response code="404">Item not found.</response>
+        /// <response code="500">Internal Server error.</response>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("{id}", Name = "GetUserById_v1")]
+        [ProducesResponseType(typeof(UserResource), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetUsersById([FromRoute] string id) =>
+             Ok(await _usersManager.GetUserById(id));
+
+        /// <summary>
         ///  Get user by email.
         /// </summary>
         /// <remarks>Get user by email.</remarks>
-        /// <param name="model"></param>
+        /// <param name="email"></param>
         /// <response code="200">users are returned.</response>
         /// <response code="400">Bad request.</response>
         /// <response code="401">Unauthorized.</response>
@@ -62,9 +80,9 @@ namespace API.Controllers
         [HttpGet]
         [Route("{email}", Name = "GetUserByEmail_v1")]
         [ProducesResponseType(typeof(UserResource), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetAllUsers([FromRoute] string email) =>
+        public async Task<IActionResult> GetUserByEmail([FromRoute] string email) =>
              Ok(await _usersManager.GetUserByEmail(email));
-        
+
 
         /// <summary>
         ///  Register User.
@@ -90,6 +108,7 @@ namespace API.Controllers
         ///  Update User.
         /// </summary>
         /// <remarks>Update user.</remarks>
+        /// <param name="email"></param>
         /// <param name="model"></param>
         /// <response code="200">user is created.</response>
         /// <response code="400">Bad request.</response>
@@ -110,7 +129,8 @@ namespace API.Controllers
         ///  Grant User Permissions.
         /// </summary>
         /// <remarks>Grant user permissions.</remarks>
-        /// <param name="model"></param>
+        /// <param name="email"></param>
+        /// <param name="roles"></param>
         /// <response code="200">user is created.</response>
         /// <response code="400">Bad request.</response>
         /// <response code="401">Unauthorized.</response>
@@ -131,7 +151,8 @@ namespace API.Controllers
         ///  Revoke User Permissions.
         /// </summary>
         /// <remarks>Revoke user permissions.</remarks>
-        /// <param name="model"></param>
+        /// <param name="email"></param>
+        /// <param name="roles"></param>
         /// <response code="200">user is created.</response>
         /// <response code="400">Bad request.</response>
         /// <response code="401">Unauthorized.</response>
@@ -152,7 +173,7 @@ namespace API.Controllers
         ///  Delete User.
         /// </summary>
         /// <remarks>Delete user by email.</remarks>
-        /// <param name="model"></param>
+        /// <param name="email"></param>
         /// <response code="204">user is deleted.</response>
         /// <response code="400">Bad request.</response>
         /// <response code="401">Unauthorized.</response>

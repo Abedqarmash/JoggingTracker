@@ -9,6 +9,8 @@
         public const string UserDoesNotHaveEnoughPermission = "You don't have enough permission";
 
         public static string UserWithEmailDoesNotExist(string email) => $"User with email: {email} does not exist";
+        public static string UserWithIdDoesNotExist(string id) => $"User with id: {id} does not exist";
+        public static string RecordIdDoesNotExist(int id) => $"Record with id: {id} does not exist";
         public static string UserWithEmailOrUserNameAlreadyExist(string email, string username) => $"User with email: {email} or username: {username} already exist";
     }
 }

@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="V1\Jogging\" />
+    <Folder Include="V1\Jogging\Resources\" />
   </ItemGroup>
 
   <ItemGroup>

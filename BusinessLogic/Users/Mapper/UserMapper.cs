@@ -20,6 +20,7 @@ namespace BusinessLogic.Users.Mapper
         {
             return new()
             {
+                Id = entity.Id,
                 Email = entity.Email,
                 UserName = entity.UserName,
                 roles = roles ?? Enumerable.Empty<string>()

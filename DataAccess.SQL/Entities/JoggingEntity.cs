@@ -25,6 +25,11 @@ namespace DataAccess.SQL.Entities
         public TimeSpan Time { get; set; }
 
         /// <summary>
+        /// Jogging Location
+        /// </summary>
+        public string Location { get; set; } = default!;
+
+        /// <summary>
         /// User Id
         /// Foreign key for user
         /// </summary>

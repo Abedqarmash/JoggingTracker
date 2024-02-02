@@ -55,7 +55,7 @@ namespace DataAccess.SQL.Repositories
 
         public void Delete(TEntity entity)
         {
-            _context.Set<TEntity>().Update(entity);
+            _context.Set<TEntity>().Remove(entity);
         }
     }
 }

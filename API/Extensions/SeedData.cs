@@ -6,7 +6,21 @@ namespace API.Extensions
 {
     public static class SeedData
     {
-        public static async Task Initialize(IServiceProvider serviceProvider, UserManager<UserEntity> userManager)
+        public static async Task InitializeRoles(RoleManager<IdentityRole> roleManager)
+        {
+            foreach (var roleName in Enum.GetNames(typeof(RoleType)))
+            {
+                var roleExist = await roleManager.RoleExistsAsync(roleName);
+
+                if (!roleExist)
+                {
+                    await roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+
+        }
+
+        public static async Task Initialize(UserManager<UserEntity> userManager)
         {
             var adminUserModel = new UserEntity
             {
@@ -15,49 +29,55 @@ namespace API.Extensions
                 CreatedBy = "System user",
                 CreatedOn = DateTimeOffset.Now,
             };
-            var createdResult = await userManager.CreateAsync(adminUserModel,"AdminPass@123");
 
-            if(createdResult.Succeeded)
+            var adminUser = await userManager.FindByEmailAsync(adminUserModel.Email);
+            if (adminUser is null)
             {
-                adminUserModel = await userManager.FindByEmailAsync(adminUserModel.Email);
+                var createdResult = await userManager.CreateAsync(adminUserModel, "AdminPass@123");
 
-                foreach (var roleName in Enum.GetNames(typeof(RoleType)))
+                if (createdResult.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(adminUserModel, roleName);
+                    adminUserModel = await userManager.FindByEmailAsync(adminUserModel.Email);
+
+                    await userManager.AddToRoleAsync(adminUserModel, RoleType.Admin.GetDescription());
                 }
+
+                // var model = new UserEntity
+                //{
+                //    UserName = "UserManager",
+                //    Email = "userManager@userManager.com",
+                //    CreatedBy = "System user",
+                //    CreatedOn = DateTimeOffset.Now,
+                //};
+                // createdResult = await userManager.CreateAsync(model, "AdminPass@123");
+
+                //if (createdResult.Succeeded)
+                //{
+                //    model = await userManager.FindByEmailAsync(model.Email);
+
+                //    await userManager.AddToRoleAsync(model, "UserManager");
+                //}
+
+                //model = new UserEntity
+                //{
+                //    UserName = "User",
+                //    Email = "user@user.com",
+                //    CreatedBy = "System user",
+                //    CreatedOn = DateTimeOffset.Now,
+                //};
+                //createdResult = await userManager.CreateAsync(model, "AdminPass@123");
+
+                //if (createdResult.Succeeded)
+                //{
+                //    model = await userManager.FindByEmailAsync(model.Email);
+
+                //    await userManager.AddToRoleAsync(model, "User");
+                //}
             }
-
-            // var model = new UserEntity
-            //{
-            //    UserName = "UserManager",
-            //    Email = "userManager@userManager.com",
-            //    CreatedBy = "System user",
-            //    CreatedOn = DateTimeOffset.Now,
-            //};
-            // createdResult = await userManager.CreateAsync(model, "AdminPass@123");
-
-            //if (createdResult.Succeeded)
-            //{
-            //    model = await userManager.FindByEmailAsync(model.Email);
-
-            //    await userManager.AddToRoleAsync(model, "UserManager");
-            //}
-
-            //model = new UserEntity
-            //{
-            //    UserName = "User",
-            //    Email = "user@user.com",
-            //    CreatedBy = "System user",
-            //    CreatedOn = DateTimeOffset.Now,
-            //};
-            //createdResult = await userManager.CreateAsync(model, "AdminPass@123");
-
-            //if (createdResult.Succeeded)
-            //{
-            //    model = await userManager.FindByEmailAsync(model.Email);
-
-            //    await userManager.AddToRoleAsync(model, "User");
-            //}
+            else
+            {
+                await userManager.AddToRoleAsync(adminUser, RoleType.Admin.GetDescription());
+            }
         }
     }
 }

@@ -32,8 +32,6 @@ namespace DataAccess.SQL.ApplicationDbContext
             builder.Entity<IdentityUserLogin<string>>(entity => { entity.ToTable(name: "UserLogins"); });
             builder.Entity<IdentityUserToken<string>>(entity => { entity.ToTable(name: "UserTokens"); });
             builder.Entity<IdentityRoleClaim<string>>(entity => { entity.ToTable(name: "RoleClaims"); });
-
-            SeedRoles(builder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -41,19 +39,6 @@ namespace DataAccess.SQL.ApplicationDbContext
             optionsBuilder.UseSqlServer("Server=.;Database=Jogging_Tracker;Trusted_Connection=true; MultipleActiveResultSets=true");
         }
 
-        private void SeedRoles(ModelBuilder modelBuilder)
-        {
-            foreach (var roleName in Enum.GetNames(typeof(RoleType)))
-            {
-                var role = new IdentityRole
-                {
-                    Name = roleName,
-                    NormalizedName = roleName.ToUpper()
-                };
-
-                modelBuilder.Entity<IdentityRole>().HasData(role);
-            }
-        }
 
         public DbSet<JoggingEntity> JoggingEntities { get; set; }
     }

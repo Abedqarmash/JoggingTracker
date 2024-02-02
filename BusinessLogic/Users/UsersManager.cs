@@ -21,6 +21,7 @@ namespace BusinessLogic.Users
     public interface IUsersManager
     {
         public Task<ResourceCollection<UserResource>> GetAllUsers(UserListFilter? filter);
+        public Task<UserResource> GetUserById(string id);
         public Task<UserResource> GetUserByEmail(string email);
         public Task<AuthenticationResource> LogIn(LoginModel model);
         public Task<UserResource> RegisterUser(RegisterModel model);
@@ -58,6 +59,17 @@ namespace BusinessLogic.Users
 
             return new ResourceCollection<UserResource>(users,
                 await _unitOfWork.UsersRepository.CountAsync(GetExpressions(filter)));
+        }
+
+        public async Task<UserResource> GetUserById(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user is null)
+                throw new ItemNotFoundException(nameof(id), ValidationMessages.UserWithIdDoesNotExist(id));
+            var roles = await _userManager.GetRolesAsync(user);
+
+            return user.ToResource(roles);
         }
 
         public async Task<UserResource> GetUserByEmail(string email)

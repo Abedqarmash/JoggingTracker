@@ -1,4 +1,5 @@
 using API.Extensions;
+using BusinessLogic.JoggingTracker;
 using Contracts.GlobalExeptionHandler;
 using DataAccess.SQL.ApplicationDbContext;
 using DataAccess.SQL.Entities;
@@ -15,7 +16,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerDocumentation();
 builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
+builder.Services.AddScoped<IJoggingTrackerManager, JoggingTrackerManager>();
+builder.Services.AddMvc()
+    .AddNewtonsoftJson();
 builder.Services.AddDbContextFactory<AppDbContext>();
 builder.Services.AddHttpContextAccessor();
 builder.Services
@@ -53,7 +56,9 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var userManager = services.GetRequiredService<UserManager<UserEntity>>();
-        await SeedData.Initialize(services, userManager);
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+        await SeedData.InitializeRoles(roleManager);
+        await SeedData.Initialize(userManager);
     }
     catch (Exception ex)
     {

@@ -7,6 +7,7 @@ namespace DataAccess.SQL.UnitOfWork
     public interface IUnitOfWork
     {
         public IRepository<UserEntity> UsersRepository { get; }
+        public IRepository<JoggingEntity> JoggingRepository { get; }
 
         public Task SaveChanges();
     }
@@ -14,6 +15,7 @@ namespace DataAccess.SQL.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private IRepository<UserEntity> _usersRepoistory = default!;
+        private IRepository<JoggingEntity> _joggingRepoistory = default!;
 
         private readonly AppDbContext _context;
 
@@ -24,6 +26,15 @@ namespace DataAccess.SQL.UnitOfWork
             get
             {
                 return _usersRepoistory ??= new BaseRepository<UserEntity>(_context);
+            }
+        }
+
+
+        public IRepository<JoggingEntity> JoggingRepository
+        {
+            get
+            {
+                return _joggingRepoistory ??= new BaseRepository<JoggingEntity>(_context);
             }
         }
 
