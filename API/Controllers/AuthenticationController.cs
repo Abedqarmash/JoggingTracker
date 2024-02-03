@@ -26,12 +26,27 @@ namespace API.Controllers
         /// <response code="500">Internal Server error.</response>
         /// <returns></returns>
         [HttpPost]
-        [Route("", Name = "Login_v1")]
+        [Route("login", Name = "Login_v1")]
         [ProducesResponseType(typeof(AuthenticationResource), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
-        {
-            var resource = await _usersManager.LogIn(model);
-            return Ok(resource);
-        }
+            => Ok(await _usersManager.LogIn(model));
+
+        /// <summary>
+        ///  Register User.
+        /// </summary>
+        /// <remarks>Register new user.</remarks>
+        /// <param name="model"></param>
+        /// <response code="201">user is created.</response>
+        /// <response code="400">Bad request.</response>
+        /// <response code="401">Unauthorized.</response>
+        /// <response code="403">Forbidden.</response>
+        /// <response code="404">Item is not found.</response>
+        /// <response code="500">Internal Server error.</response>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("register", Name = "RegisterUser_v1")]
+        [ProducesResponseType(typeof(UserResource), (int)HttpStatusCode.Created)]
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterModel model)
+            => Ok(await _usersManager.RegisterUser(model));   
     }
 }
