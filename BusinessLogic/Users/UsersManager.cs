@@ -117,17 +117,17 @@ namespace BusinessLogic.Users
                     ValidationMessages.UserWithEmailOrUserNameAlreadyExist(model.Email, model.UserName));
 
 
-           var creationResult =  await _userManager.CreateAsync(model.ToEntity()
-               .MapEntityTrackableInformation(UserName, DateTimeOffset.Now), model.Password);
+            var creationResult = await _userManager.CreateAsync(model.ToEntity()
+                .MapEntityTrackableInformation(UserName, DateTimeOffset.Now), model.Password);
 
-           if(creationResult.Errors.Any())
+            if (creationResult.Errors.Any())
             {
                 throw new InvalidModelException(nameof(model), creationResult.Errors.FirstOrDefault()!.Description);
             }
-
             var userEntity = (await _userManager.FindByEmailAsync(model.Email));
+            await _userManager.AddToRoleAsync(userEntity, RoleType.User.GetDescription());
 
-            return userEntity.ToResource();
+            return userEntity.ToResource(await _userManager.GetRolesAsync(userEntity));
         }
 
         public async Task<UserResource> UpdateUser(string email, RegisterModel model)

@@ -5,6 +5,11 @@ namespace DataAccess.SQL.Entities
     public class UserEntity : IdentityUser
     {
         /// <summary>
+        /// Relation one to Many
+        /// </summary>
+        public List<JoggingEntity> joggingEntities { get; set; } = new List<JoggingEntity>();
+
+        /// <summary>
         /// Created By.
         /// </summary>
         public string CreatedBy { get; set; } = string.Empty;
