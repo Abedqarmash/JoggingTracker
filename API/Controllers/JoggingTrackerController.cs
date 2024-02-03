@@ -1,6 +1,7 @@
 ﻿using BusinessLogic.JoggingTracker;
 using Contracts.V1.Jogging.Filters;
 using Contracts.V1.Jogging.Models;
+using Contracts.V1.Jogging.Resources;
 using Contracts.V1.SharedModels;
 using DataAccess.SQL.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -24,9 +25,26 @@ namespace API.Controllers
         }
 
         /// <summary>
+        ///  Get weekly reports for records.
+        /// </summary>
+        /// <remarks>Get generated report.</remarks>
+        /// <response code="200">records are returned.</response>
+        /// <response code="400">Bad request.</response>
+        /// <response code="401">Unauthorized.</response>
+        /// <response code="403">Forbidden.</response>
+        /// <response code="500">Internal Server error.</response>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("reports", Name = "GetReports_v1")]
+        [ProducesResponseType(typeof(IEnumerable<ReportResource>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetReports() =>
+            Ok(await _manager.GetReports());
+        
+
+        /// <summary>
         ///  Get list of records.
         /// </summary>
-        /// <remarks>Get filtered records of users.</remarks>
+        /// <remarks>Get filtered records.</remarks>
         /// <param name="filter"></param>
         /// <response code="200">records are returned.</response>
         /// <response code="400">Bad request.</response>

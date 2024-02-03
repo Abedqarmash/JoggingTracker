@@ -2,6 +2,7 @@
 using Contracts.GlobalExeptionHandler.Exceptions;
 using Contracts.V1.Jogging.Filters;
 using Contracts.V1.Jogging.Models;
+using Contracts.V1.Jogging.Resources;
 using Contracts.V1.SharedModels;
 using DataAccess.SQL.Entities;
 using DataAccess.SQL.UnitOfWork;
@@ -12,6 +13,7 @@ namespace BusinessLogic.JoggingTracker
 {
     public interface IJoggingTrackerManager
     {
+        public Task<IEnumerable<ReportResource>> GetReports();
         public Task<ResourceCollection<JoggingEntity>> GetRecoreds(JoggingTrackerFilter? filter);
         public Task<JoggingEntity> GetRecoredById(int id);
         public Task<JoggingEntity> CreateRecord(JoggingModel model);
@@ -22,20 +24,35 @@ namespace BusinessLogic.JoggingTracker
     public class JoggingTrackerManager : IJoggingTrackerManager
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IJoggingTrackerReportService _joggingTrackerReportService;
         private readonly string UserName;
         private readonly string UserId;
 
-        public JoggingTrackerManager(IUnitOfWork unitOfWork,
-            IHttpContextAccessor httpContextAccessor)
+        public JoggingTrackerManager(
+            IUnitOfWork unitOfWork,
+            IHttpContextAccessor httpContextAccessor,
+            IJoggingTrackerReportService joggingTrackerReportService)
         {
             _unitOfWork = unitOfWork;
-            UserName = httpContextAccessor.HttpContext.User?.FindFirst("userName")?.Value ?? string.Empty;
-            UserId = httpContextAccessor.HttpContext.User?.FindFirst("id")?.Value ?? string.Empty;
+            _joggingTrackerReportService = joggingTrackerReportService;
+            UserName = httpContextAccessor.HttpContext.User?.FindFirst("userName")!.Value!;
+            UserId = httpContextAccessor.HttpContext.User?.FindFirst("id")!.Value!;
+        }
+
+        public async Task<IEnumerable<ReportResource>> GetReports()
+        {
+            List<Expression<Func<JoggingEntity, bool>>> experssions = new() { x => x.UserId == UserId };
+            var records = (await _unitOfWork.JoggingRepository
+                .GetItemsAsync(experssions));
+
+            return _joggingTrackerReportService.GenerateWeeklyReports(records);
         }
 
         public async Task<ResourceCollection<JoggingEntity>> GetRecoreds(JoggingTrackerFilter? filter)
         {
-            var records = (await _unitOfWork.JoggingRepository.GetItemsAsync(GetExpressions(filter), null, filter))
+            var expression = GetExpressions(filter);
+            expression.Add(x => x.UserId == UserId);
+            var records = (await _unitOfWork.JoggingRepository.GetItemsAsync(expression, null, filter))
                 .ToList();
 
 
@@ -45,7 +62,8 @@ namespace BusinessLogic.JoggingTracker
 
         public async Task<JoggingEntity> GetRecoredById(int id)
         {
-            var record = await _unitOfWork.JoggingRepository.FirstOrDefaultAsync(x => x.Id == id);
+            var record = await _unitOfWork.JoggingRepository
+                .FirstOrDefaultAsync(x => x.Id == id && x.UserId == UserId);
             ValidateRecordExist(id, record);
 
             return record!;
@@ -63,7 +81,8 @@ namespace BusinessLogic.JoggingTracker
 
         public async Task<JoggingEntity> UpdateRecord(int id, JoggingModel model)
         {
-            var record = await _unitOfWork.JoggingRepository.FirstOrDefaultAsync(x => x.Id == id);
+            var record = await _unitOfWork.JoggingRepository
+                .FirstOrDefaultAsync(x => x.Id == id && x.UserId == UserId);
             ValidateRecordExist(id, record);
 
             record!.Date = model.Date;
@@ -81,7 +100,8 @@ namespace BusinessLogic.JoggingTracker
 
         public async Task DeleteRecord(int id)
         {
-            var record = await _unitOfWork.JoggingRepository.FirstOrDefaultAsync(x => x.Id == id);
+            var record = await _unitOfWork.JoggingRepository
+                .FirstOrDefaultAsync(x => x.Id == id && x.UserId == UserId);
             ValidateRecordExist(id, record);
 
             _unitOfWork.JoggingRepository.Delete(record!);

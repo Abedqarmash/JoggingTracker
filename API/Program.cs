@@ -17,6 +17,7 @@ builder.Services.AddSwaggerDocumentation();
 builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IJoggingTrackerManager, JoggingTrackerManager>();
+builder.Services.AddScoped<IJoggingTrackerReportService, JoggingTrackerReportService>();
 builder.Services.AddMvc()
     .AddNewtonsoftJson();
 builder.Services.AddDbContextFactory<AppDbContext>();
