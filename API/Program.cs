@@ -69,3 +69,8 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
+
+namespace API
+{
+    public class Program { }
+}

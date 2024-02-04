@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
 
 namespace API.Extensions
 {
@@ -10,11 +9,6 @@ namespace API.Extensions
             service.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new() { Title = "Jogging Tracker", Version = "v1" });
-
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPAth = Path.Combine(AppContext.BaseDirectory, xmlFile);
-
-               // options.IncludeXmlComments(xmlPAth);
 
                 var securitySchema = new OpenApiSecurityScheme
                 {

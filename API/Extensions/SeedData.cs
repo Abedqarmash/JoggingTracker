@@ -42,41 +42,31 @@ namespace API.Extensions
                     await userManager.AddToRoleAsync(adminUserModel, RoleType.Admin.GetDescription());
                 }
 
-                // var model = new UserEntity
-                //{
-                //    UserName = "UserManager",
-                //    Email = "userManager@userManager.com",
-                //    CreatedBy = "System user",
-                //    CreatedOn = DateTimeOffset.Now,
-                //};
-                // createdResult = await userManager.CreateAsync(model, "AdminPass@123");
-
-                //if (createdResult.Succeeded)
-                //{
-                //    model = await userManager.FindByEmailAsync(model.Email);
-
-                //    await userManager.AddToRoleAsync(model, "UserManager");
-                //}
-
-                //model = new UserEntity
-                //{
-                //    UserName = "User",
-                //    Email = "user@user.com",
-                //    CreatedBy = "System user",
-                //    CreatedOn = DateTimeOffset.Now,
-                //};
-                //createdResult = await userManager.CreateAsync(model, "AdminPass@123");
-
-                //if (createdResult.Succeeded)
-                //{
-                //    model = await userManager.FindByEmailAsync(model.Email);
-
-                //    await userManager.AddToRoleAsync(model, "User");
-                //}
+                await CreateUser(userManager, "UserManager", "userManager@mnager.com", RoleType.UserManager.GetDescription());
+                await CreateUser(userManager, "User", "user@normalUser.com", RoleType.User.GetDescription());
             }
             else
             {
                 await userManager.AddToRoleAsync(adminUser, RoleType.Admin.GetDescription());
+            }
+        }
+
+        private static async Task CreateUser(UserManager<UserEntity> userManager, string username, string email, string role)
+        {
+            var model = new UserEntity
+            {
+                UserName = username,
+                Email = email,
+                CreatedBy = "System user",
+                CreatedOn = DateTimeOffset.Now,
+            };
+            var createdResult = await userManager.CreateAsync(model, "AdminPass@123");
+
+            if (createdResult.Succeeded)
+            {
+                model = await userManager.FindByEmailAsync(model.Email);
+
+                await userManager.AddToRoleAsync(model, role);
             }
         }
     }

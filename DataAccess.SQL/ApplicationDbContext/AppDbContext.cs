@@ -24,7 +24,6 @@ namespace DataAccess.SQL.ApplicationDbContext
             builder.Entity<UserEntity>(entity =>
             {
                 entity.ToTable(name: "Users");
-                entity.Property(i => i.Email).IsRequired(true);
             });
             builder.Entity<IdentityRole>(entity => { entity.ToTable(name: "Roles"); });
             builder.Entity<IdentityUserClaim<string>>(entity => { entity.ToTable(name: "UserClaims"); });

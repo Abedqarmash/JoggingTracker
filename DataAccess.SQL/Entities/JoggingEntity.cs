@@ -58,10 +58,5 @@ namespace DataAccess.SQL.Entities
         /// </summary>
         public DateTimeOffset? ModifiedOn { get; set; }
 
-        /// <summary>
-        /// Soft Delete flag
-        /// </summary>
-        public bool IsDeleted { get; set; }
-
     }
 }

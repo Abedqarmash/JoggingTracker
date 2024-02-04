@@ -28,7 +28,7 @@ namespace API.Controllers
         ///  Get weekly reports for records.
         /// </summary>
         /// <remarks>Get generated report.</remarks>
-        /// <response code="200">records are returned.</response>
+        /// <response code="200">report is returned.</response>
         /// <response code="400">Bad request.</response>
         /// <response code="401">Unauthorized.</response>
         /// <response code="403">Forbidden.</response>

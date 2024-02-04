@@ -2,14 +2,8 @@
 # EfAddMigrationStep.ps1
 #
 param(
-    [string]$migrationName,
-	[string]$dbContext
+    [string]$migrationName
 )
 
-if ([string]::IsNullOrEmpty($dbContext))
-{
-	$dbContext = "AppDbContext";
-}
-
-dotnet ef migrations add -c $dbContext $migrationName -v
+dotnet ef migrations add -c "AppDbContext" $migrationName -v
 dotnet ef database update

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.SQL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240201104026_InitialMigration")]
+    [Migration("20240204111407_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,8 +45,9 @@ namespace DataAccess.SQL.Migrations
                     b.Property<double>("Distance")
                         .HasColumnType("float");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(max)");
@@ -88,14 +89,10 @@ namespace DataAccess.SQL.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
@@ -175,29 +172,6 @@ namespace DataAccess.SQL.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("Roles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "5edbdc96-e0b8-4584-83dd-afda003a2a70",
-                            ConcurrencyStamp = "3e07ea10-6682-4162-91d5-6345c47447a4",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "85d01904-98e5-4161-930c-6df5a3f0a4df",
-                            ConcurrencyStamp = "a425336f-433f-4e28-b953-197ac8bd6696",
-                            Name = "UserManager",
-                            NormalizedName = "USERMANAGER"
-                        },
-                        new
-                        {
-                            Id = "8040e987-3b28-40a0-8be1-429099b5ba64",
-                            ConcurrencyStamp = "ec4d3729-88d0-45b1-b43e-f7d40f7de534",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -309,7 +283,7 @@ namespace DataAccess.SQL.Migrations
             modelBuilder.Entity("DataAccess.SQL.Entities.JoggingEntity", b =>
                 {
                     b.HasOne("DataAccess.SQL.Entities.UserEntity", "User")
-                        .WithMany()
+                        .WithMany("joggingEntities")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -366,6 +340,11 @@ namespace DataAccess.SQL.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DataAccess.SQL.Entities.UserEntity", b =>
+                {
+                    b.Navigation("joggingEntities");
                 });
 #pragma warning restore 612, 618
         }

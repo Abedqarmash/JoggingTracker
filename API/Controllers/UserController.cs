@@ -60,7 +60,7 @@ namespace API.Controllers
         /// <response code="500">Internal Server error.</response>
         /// <returns></returns>
         [HttpGet]
-        [Route("{id}", Name = "GetUserById_v1")]
+        [Route("id/{id}", Name = "GetUserById_v1")]
         [ProducesResponseType(typeof(UserResource), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetUsersById([FromRoute] string id) =>
              Ok(await _usersManager.GetUserById(id));
@@ -78,7 +78,7 @@ namespace API.Controllers
         /// <response code="500">Internal Server error.</response>
         /// <returns></returns>
         [HttpGet]
-        [Route("{email}", Name = "GetUserByEmail_v1")]
+        [Route("email/{email}", Name = "GetUserByEmail_v1")]
         [ProducesResponseType(typeof(UserResource), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetUserByEmail([FromRoute] string email) =>
              Ok(await _usersManager.GetUserByEmail(email));

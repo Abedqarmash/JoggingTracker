@@ -1,6 +1,5 @@
 ﻿using Contracts.V1.Jogging.Resources;
 using Contracts.V1.User.Resources;
-using DataAccess.SQL.Entities;
 using System.Text;
 
 namespace UnitTest
