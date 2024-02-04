@@ -1,0 +1,671 @@
+{
+	"info": {
+		"_postman_id": "2fc8f0c7-0aec-4c6a-976b-f5796688e516",
+		"name": "JoggingTrackerCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login to admin user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFiNDllOGUzLTVmYzYtNDVjMy04OGVmLTYxZWY1YzI4MjJhYiIsInVzZXJOYW1lIjoiQWRtaW5Vc2VyIiwic3ViIjoidXNlckFkbWluQGFkbWluLmNvbSIsImVtYWlsIjoidXNlckFkbWluQGFkbWluLmNvbSIsImp0aSI6IjA3YWMwMTVmLTFlZjQtNDQ2NC1iODU3LTA3ZDc0NWM0YThiYyIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTcwNzA1Mzg2MywiZXhwIjoxNzA3MDU3NDYzLCJpYXQiOjE3MDcwNTM4NjN9.PU7J1C_3FSAx8yBZH15Ct8iVQHinpO8MGwfJdYWk6mo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"userAdmin@admin.com\",\r\n    \"password\": \"AdminPass@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7143/v1/api/authentication/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7143",
+							"path": [
+								"v1",
+								"api",
+								"authentication",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"PostManUser\",\r\n    \"email\":\"TestPostMan@test.com\",\r\n    \"password\":\"PostMan@123\",\r\n    \"confirmPassword\":\"PostMan@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7143/v1/api/authentication/register",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7143",
+							"path": [
+								"v1",
+								"api",
+								"authentication",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login to registerd user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"TestPostMan@test.com\",\r\n    \"password\": \"PostMan@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7143/v1/api/authentication/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7143",
+							"path": [
+								"v1",
+								"api",
+								"authentication",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "JoggingTracker",
+			"item": [
+				{
+					"name": "Create tracker record",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyNjU3NjdhLWYwYTItNGIwMC04MWU0LTFhNzNiMDBhZDRhZiIsInVzZXJOYW1lIjoiUG9zdE1hblVzZXIiLCJzdWIiOiJUZXN0UG9zdE1hbkB0ZXN0LmNvbSIsImVtYWlsIjoiVGVzdFBvc3RNYW5AdGVzdC5jb20iLCJqdGkiOiI1ZTRiYTA4OS03MWMzLTRiNWItODJhOS02YWJiY2QzZTUzNmQiLCJyb2xlIjoiVXNlciIsIm5iZiI6MTcwNzA2NTgxOCwiZXhwIjoxNzA3MDY5NDE4LCJpYXQiOjE3MDcwNjU4MTh9.ecNl3hbsMvE2ZiRQn4Hzg6X5zXCvaYuCIiHcxOru_C0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\": \"2024-02-04\",\r\n    \"distance\": 3,\r\n    \"time\": \"01:30\",\r\n    \"location\": \"Park\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7143/v1/api/records",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7143",
+							"path": [
+								"v1",
+								"api",
+								"records"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a second tracker record",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyNjU3NjdhLWYwYTItNGIwMC04MWU0LTFhNzNiMDBhZDRhZiIsInVzZXJOYW1lIjoiUG9zdE1hblVzZXIiLCJzdWIiOiJUZXN0UG9zdE1hbkB0ZXN0LmNvbSIsImVtYWlsIjoiVGVzdFBvc3RNYW5AdGVzdC5jb20iLCJqdGkiOiI1ZTRiYTA4OS03MWMzLTRiNWItODJhOS02YWJiY2QzZTUzNmQiLCJyb2xlIjoiVXNlciIsIm5iZiI6MTcwNzA2NTgxOCwiZXhwIjoxNzA3MDY5NDE4LCJpYXQiOjE3MDcwNjU4MTh9.ecNl3hbsMvE2ZiRQn4Hzg6X5zXCvaYuCIiHcxOru_C0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\": \"2024-02-06\",\r\n    \"distance\": 2,\r\n    \"time\": \"02:30\",\r\n    \"location\": \"City\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7143/v1/api/records",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7143",
+							"path": [
+								"v1",
+								"api",
+								"records"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get records",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyNjU3NjdhLWYwYTItNGIwMC04MWU0LTFhNzNiMDBhZDRhZiIsInVzZXJOYW1lIjoiUG9zdE1hblVzZXIiLCJzdWIiOiJUZXN0UG9zdE1hbkB0ZXN0LmNvbSIsImVtYWlsIjoiVGVzdFBvc3RNYW5AdGVzdC5jb20iLCJqdGkiOiI1ZTRiYTA4OS03MWMzLTRiNWItODJhOS02YWJiY2QzZTUzNmQiLCJyb2xlIjoiVXNlciIsIm5iZiI6MTcwNzA2NTgxOCwiZXhwIjoxNzA3MDY5NDE4LCJpYXQiOjE3MDcwNjU4MTh9.ecNl3hbsMvE2ZiRQn4Hzg6X5zXCvaYuCIiHcxOru_C0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7143/v1/api/records",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7143",
+							"path": [
+								"v1",
+								"api",
+								"records"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit second record",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyNjU3NjdhLWYwYTItNGIwMC04MWU0LTFhNzNiMDBhZDRhZiIsInVzZXJOYW1lIjoiUG9zdE1hblVzZXIiLCJzdWIiOiJUZXN0UG9zdE1hbkB0ZXN0LmNvbSIsImVtYWlsIjoiVGVzdFBvc3RNYW5AdGVzdC5jb20iLCJqdGkiOiI1ZTRiYTA4OS03MWMzLTRiNWItODJhOS02YWJiY2QzZTUzNmQiLCJyb2xlIjoiVXNlciIsIm5iZiI6MTcwNzA2NTgxOCwiZXhwIjoxNzA3MDY5NDE4LCJpYXQiOjE3MDcwNjU4MTh9.ecNl3hbsMvE2ZiRQn4Hzg6X5zXCvaYuCIiHcxOru_C0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\": \"2024-02-07\",\r\n    \"distance\": 5,\r\n    \"time\": \"02:30\",\r\n    \"location\": \"City\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7143/v1/api/records/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7143",
+							"path": [
+								"v1",
+								"api",
+								"records",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a record to delete it",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyNjU3NjdhLWYwYTItNGIwMC04MWU0LTFhNzNiMDBhZDRhZiIsInVzZXJOYW1lIjoiUG9zdE1hblVzZXIiLCJzdWIiOiJUZXN0UG9zdE1hbkB0ZXN0LmNvbSIsImVtYWlsIjoiVGVzdFBvc3RNYW5AdGVzdC5jb20iLCJqdGkiOiI1ZTRiYTA4OS03MWMzLTRiNWItODJhOS02YWJiY2QzZTUzNmQiLCJyb2xlIjoiVXNlciIsIm5iZiI6MTcwNzA2NTgxOCwiZXhwIjoxNzA3MDY5NDE4LCJpYXQiOjE3MDcwNjU4MTh9.ecNl3hbsMvE2ZiRQn4Hzg6X5zXCvaYuCIiHcxOru_C0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\": \"2024-02-10\",\r\n    \"distance\": 15,\r\n    \"time\": \"03:30\",\r\n    \"location\": \"City\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7143/v1/api/records",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7143",
+							"path": [
+								"v1",
+								"api",
+								"records"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyNjU3NjdhLWYwYTItNGIwMC04MWU0LTFhNzNiMDBhZDRhZiIsInVzZXJOYW1lIjoiUG9zdE1hblVzZXIiLCJzdWIiOiJUZXN0UG9zdE1hbkB0ZXN0LmNvbSIsImVtYWlsIjoiVGVzdFBvc3RNYW5AdGVzdC5jb20iLCJqdGkiOiI1ZTRiYTA4OS03MWMzLTRiNWItODJhOS02YWJiY2QzZTUzNmQiLCJyb2xlIjoiVXNlciIsIm5iZiI6MTcwNzA2NTgxOCwiZXhwIjoxNzA3MDY5NDE4LCJpYXQiOjE3MDcwNjU4MTh9.ecNl3hbsMvE2ZiRQn4Hzg6X5zXCvaYuCIiHcxOru_C0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7143/v1/api/records/3",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7143",
+							"path": [
+								"v1",
+								"api",
+								"records",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Report",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyNjU3NjdhLWYwYTItNGIwMC04MWU0LTFhNzNiMDBhZDRhZiIsInVzZXJOYW1lIjoiUG9zdE1hblVzZXIiLCJzdWIiOiJUZXN0UG9zdE1hbkB0ZXN0LmNvbSIsImVtYWlsIjoiVGVzdFBvc3RNYW5AdGVzdC5jb20iLCJqdGkiOiI1ZTRiYTA4OS03MWMzLTRiNWItODJhOS02YWJiY2QzZTUzNmQiLCJyb2xlIjoiVXNlciIsIm5iZiI6MTcwNzA2NTgxOCwiZXhwIjoxNzA3MDY5NDE4LCJpYXQiOjE3MDcwNjU4MTh9.ecNl3hbsMvE2ZiRQn4Hzg6X5zXCvaYuCIiHcxOru_C0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7143/v1/api/records/reports",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7143",
+							"path": [
+								"v1",
+								"api",
+								"records",
+								"reports"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UserManagement",
+			"item": [
+				{
+					"name": "Get users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFiNDllOGUzLTVmYzYtNDVjMy04OGVmLTYxZWY1YzI4MjJhYiIsInVzZXJOYW1lIjoiQWRtaW5Vc2VyIiwic3ViIjoidXNlckFkbWluQGFkbWluLmNvbSIsImVtYWlsIjoidXNlckFkbWluQGFkbWluLmNvbSIsImp0aSI6IjFiODRhMDcxLThiODktNGZjMi05ZWMwLTI3MzRlODgxMjE3ZCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTcwNzA2NTcwMCwiZXhwIjoxNzA3MDY5MzAwLCJpYXQiOjE3MDcwNjU3MDB9.pVYr3ZMpb0aA4370wGqYRNe0SOzU5zWhgMwp6ZboC9k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7143/v1/api/users",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7143",
+							"path": [
+								"v1",
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFiNDllOGUzLTVmYzYtNDVjMy04OGVmLTYxZWY1YzI4MjJhYiIsInVzZXJOYW1lIjoiQWRtaW5Vc2VyIiwic3ViIjoidXNlckFkbWluQGFkbWluLmNvbSIsImVtYWlsIjoidXNlckFkbWluQGFkbWluLmNvbSIsImp0aSI6IjFiODRhMDcxLThiODktNGZjMi05ZWMwLTI3MzRlODgxMjE3ZCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTcwNzA2NTcwMCwiZXhwIjoxNzA3MDY5MzAwLCJpYXQiOjE3MDcwNjU3MDB9.pVYr3ZMpb0aA4370wGqYRNe0SOzU5zWhgMwp6ZboC9k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"PostManUser1111\",\r\n    \"email\":\"TestPostMan1111@test.com\",\r\n    \"password\":\"PostMan@123\",\r\n    \"confirmPassword\":\"PostMan@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7143/v1/api/users",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7143",
+							"path": [
+								"v1",
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFiNDllOGUzLTVmYzYtNDVjMy04OGVmLTYxZWY1YzI4MjJhYiIsInVzZXJOYW1lIjoiQWRtaW5Vc2VyIiwic3ViIjoidXNlckFkbWluQGFkbWluLmNvbSIsImVtYWlsIjoidXNlckFkbWluQGFkbWluLmNvbSIsImp0aSI6IjFiODRhMDcxLThiODktNGZjMi05ZWMwLTI3MzRlODgxMjE3ZCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTcwNzA2NTcwMCwiZXhwIjoxNzA3MDY5MzAwLCJpYXQiOjE3MDcwNjU3MDB9.pVYr3ZMpb0aA4370wGqYRNe0SOzU5zWhgMwp6ZboC9k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7143/v1/api/users/id/debb82ed-48c1-43ae-b21f-8d444377ca02",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7143",
+							"path": [
+								"v1",
+								"api",
+								"users",
+								"id",
+								"debb82ed-48c1-43ae-b21f-8d444377ca02"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user by email",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFiNDllOGUzLTVmYzYtNDVjMy04OGVmLTYxZWY1YzI4MjJhYiIsInVzZXJOYW1lIjoiQWRtaW5Vc2VyIiwic3ViIjoidXNlckFkbWluQGFkbWluLmNvbSIsImVtYWlsIjoidXNlckFkbWluQGFkbWluLmNvbSIsImp0aSI6IjFiODRhMDcxLThiODktNGZjMi05ZWMwLTI3MzRlODgxMjE3ZCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTcwNzA2NTcwMCwiZXhwIjoxNzA3MDY5MzAwLCJpYXQiOjE3MDcwNjU3MDB9.pVYr3ZMpb0aA4370wGqYRNe0SOzU5zWhgMwp6ZboC9k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7143/v1/api/users/email/TestPostMan1111@test.com",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7143",
+							"path": [
+								"v1",
+								"api",
+								"users",
+								"email",
+								"TestPostMan1111@test.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user by email",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFiNDllOGUzLTVmYzYtNDVjMy04OGVmLTYxZWY1YzI4MjJhYiIsInVzZXJOYW1lIjoiQWRtaW5Vc2VyIiwic3ViIjoidXNlckFkbWluQGFkbWluLmNvbSIsImVtYWlsIjoidXNlckFkbWluQGFkbWluLmNvbSIsImp0aSI6IjFiODRhMDcxLThiODktNGZjMi05ZWMwLTI3MzRlODgxMjE3ZCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTcwNzA2NTcwMCwiZXhwIjoxNzA3MDY5MzAwLCJpYXQiOjE3MDcwNjU3MDB9.pVYr3ZMpb0aA4370wGqYRNe0SOzU5zWhgMwp6ZboC9k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"PostManUser1\",\r\n    \"email\":\"TestPostMan1@test.com\",\r\n    \"password\":\"UpdatedPostMan@123\",\r\n    \"confirmPassword\":\"UpdatedPostMan@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7143/v1/api/users/TestPostMan1111@test.com",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7143",
+							"path": [
+								"v1",
+								"api",
+								"users",
+								"TestPostMan1111@test.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grant permission for user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFiNDllOGUzLTVmYzYtNDVjMy04OGVmLTYxZWY1YzI4MjJhYiIsInVzZXJOYW1lIjoiQWRtaW5Vc2VyIiwic3ViIjoidXNlckFkbWluQGFkbWluLmNvbSIsImVtYWlsIjoidXNlckFkbWluQGFkbWluLmNvbSIsImp0aSI6IjFiODRhMDcxLThiODktNGZjMi05ZWMwLTI3MzRlODgxMjE3ZCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTcwNzA2NTcwMCwiZXhwIjoxNzA3MDY5MzAwLCJpYXQiOjE3MDcwNjU3MDB9.pVYr3ZMpb0aA4370wGqYRNe0SOzU5zWhgMwp6ZboC9k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7143/v1/api/users/grant/TestPostMan1%40test.com?roles=UserManager",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7143",
+							"path": [
+								"v1",
+								"api",
+								"users",
+								"grant",
+								"TestPostMan1%40test.com"
+							],
+							"query": [
+								{
+									"key": "roles",
+									"value": "UserManager"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Revoke permission for user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFiNDllOGUzLTVmYzYtNDVjMy04OGVmLTYxZWY1YzI4MjJhYiIsInVzZXJOYW1lIjoiQWRtaW5Vc2VyIiwic3ViIjoidXNlckFkbWluQGFkbWluLmNvbSIsImVtYWlsIjoidXNlckFkbWluQGFkbWluLmNvbSIsImp0aSI6IjFiODRhMDcxLThiODktNGZjMi05ZWMwLTI3MzRlODgxMjE3ZCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTcwNzA2NTcwMCwiZXhwIjoxNzA3MDY5MzAwLCJpYXQiOjE3MDcwNjU3MDB9.pVYr3ZMpb0aA4370wGqYRNe0SOzU5zWhgMwp6ZboC9k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7143/v1/api/users/revoke/TestPostMan1%40test.com?roles=admin",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7143",
+							"path": [
+								"v1",
+								"api",
+								"users",
+								"revoke",
+								"TestPostMan1%40test.com"
+							],
+							"query": [
+								{
+									"key": "roles",
+									"value": "admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user by email",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFiNDllOGUzLTVmYzYtNDVjMy04OGVmLTYxZWY1YzI4MjJhYiIsInVzZXJOYW1lIjoiQWRtaW5Vc2VyIiwic3ViIjoidXNlckFkbWluQGFkbWluLmNvbSIsImVtYWlsIjoidXNlckFkbWluQGFkbWluLmNvbSIsImp0aSI6IjFiODRhMDcxLThiODktNGZjMi05ZWMwLTI3MzRlODgxMjE3ZCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTcwNzA2NTcwMCwiZXhwIjoxNzA3MDY5MzAwLCJpYXQiOjE3MDcwNjU3MDB9.pVYr3ZMpb0aA4370wGqYRNe0SOzU5zWhgMwp6ZboC9k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7143/v1/api/users/TestPostMan1%40test.com",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7143",
+							"path": [
+								"v1",
+								"api",
+								"users",
+								"TestPostMan1%40test.com"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
