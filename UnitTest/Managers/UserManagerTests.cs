@@ -64,6 +64,7 @@ namespace UnitTest.Managers
             string userId = "testId";
             _mockUserManager.Setup(x => x.FindByIdAsync(It.IsAny<string>()))
                 .Returns(Task.FromResult<UserEntity?>(null)!);
+
             //Act
             var error = await Assert.ThrowsAsync<ItemNotFoundException>(async () =>
             {

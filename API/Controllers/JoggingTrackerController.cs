@@ -3,7 +3,6 @@ using Contracts.V1.Jogging.Filters;
 using Contracts.V1.Jogging.Models;
 using Contracts.V1.Jogging.Resources;
 using Contracts.V1.SharedModels;
-using DataAccess.SQL.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -54,7 +53,7 @@ namespace API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("", Name = "GetAllRecords_v1")]
-        [ProducesResponseType(typeof(ResourceCollection<JoggingEntity>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ResourceCollection<JoggingTrackerResource>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAllRecords([FromQuery] JoggingTrackerFilter? filter)
         {
             var chronometer = new Stopwatch();
@@ -77,7 +76,7 @@ namespace API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("{id}", Name = "GetRecordById_v1")]
-        [ProducesResponseType(typeof(JoggingEntity), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(JoggingTrackerResource), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetRecordById([FromRoute] int id) =>
              Ok(await _manager.GetRecoredById(id));
 
@@ -95,7 +94,7 @@ namespace API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("", Name = "CreateRecord_v1")]
-        [ProducesResponseType(typeof(JoggingEntity), (int)HttpStatusCode.Created)]
+        [ProducesResponseType(typeof(JoggingTrackerResource), (int)HttpStatusCode.Created)]
         public async Task<IActionResult> CreateRecord([FromBody] JoggingModel model) =>
              Ok(await _manager.CreateRecord(model));
 
@@ -113,7 +112,7 @@ namespace API.Controllers
         /// <returns></returns>
         [HttpPut]
         [Route("{id}", Name = "UpdateRecord_v1")]
-        [ProducesResponseType(typeof(JoggingEntity), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(JoggingTrackerResource), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateRecord([FromRoute] int id, [FromBody] JoggingModel model) =>
              Ok(await _manager.UpdateRecord(id, model));
 

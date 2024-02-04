@@ -14,10 +14,10 @@ namespace BusinessLogic.JoggingTracker
     public interface IJoggingTrackerManager
     {
         public Task<IEnumerable<ReportResource>> GetReports();
-        public Task<ResourceCollection<JoggingEntity>> GetRecoreds(JoggingTrackerFilter? filter);
-        public Task<JoggingEntity> GetRecoredById(int id);
-        public Task<JoggingEntity> CreateRecord(JoggingModel model);
-        public Task<JoggingEntity> UpdateRecord(int id, JoggingModel model);
+        public Task<ResourceCollection<JoggingTrackerResource>> GetRecoreds(JoggingTrackerFilter? filter);
+        public Task<JoggingTrackerResource> GetRecoredById(int id);
+        public Task<JoggingTrackerResource> CreateRecord(JoggingModel model);
+        public Task<JoggingTrackerResource> UpdateRecord(int id, JoggingModel model);
         public Task DeleteRecord(int id);
     }
 
@@ -48,7 +48,7 @@ namespace BusinessLogic.JoggingTracker
             return _joggingTrackerReportService.GenerateWeeklyReports(records);
         }
 
-        public async Task<ResourceCollection<JoggingEntity>> GetRecoreds(JoggingTrackerFilter? filter)
+        public async Task<ResourceCollection<JoggingTrackerResource>> GetRecoreds(JoggingTrackerFilter? filter)
         {
             var expression = GetExpressions(filter);
             expression.Add(x => x.UserId == UserId);
@@ -56,30 +56,30 @@ namespace BusinessLogic.JoggingTracker
                 .ToList();
 
 
-            return new ResourceCollection<JoggingEntity>(records,
+            return new ResourceCollection<JoggingTrackerResource>(records.Select(x=> x.ToResource()),
                 await _unitOfWork.JoggingRepository.CountAsync(GetExpressions(filter)));
         }
 
-        public async Task<JoggingEntity> GetRecoredById(int id)
+        public async Task<JoggingTrackerResource> GetRecoredById(int id)
         {
             var record = await _unitOfWork.JoggingRepository
                 .FirstOrDefaultAsync(x => x.Id == id && x.UserId == UserId);
             ValidateRecordExist(id, record);
 
-            return record!;
+            return record!.ToResource();
         }
 
-        public async Task<JoggingEntity> CreateRecord(JoggingModel model)
+        public async Task<JoggingTrackerResource> CreateRecord(JoggingModel model)
         {
             var entity = model.ToEntity().MapEntityTrackableInformation(UserName, DateTimeOffset.Now);
             entity.UserId = UserId;
             _unitOfWork.JoggingRepository.Create(entity);
             await _unitOfWork.SaveChanges();
 
-            return (await _unitOfWork.JoggingRepository.FirstOrDefaultAsync(x => x.Id == entity.Id))!; 
+            return (await _unitOfWork.JoggingRepository.FirstOrDefaultAsync(x => x.Id == entity.Id))!.ToResource(); 
         }
 
-        public async Task<JoggingEntity> UpdateRecord(int id, JoggingModel model)
+        public async Task<JoggingTrackerResource> UpdateRecord(int id, JoggingModel model)
         {
             var record = await _unitOfWork.JoggingRepository
                 .FirstOrDefaultAsync(x => x.Id == id && x.UserId == UserId);
@@ -95,7 +95,7 @@ namespace BusinessLogic.JoggingTracker
                 record.MapEntityTrackableInformation(record.CreatedBy,record.CreatedOn, UserName));
             await _unitOfWork.SaveChanges();
 
-            return (await _unitOfWork.JoggingRepository.FirstOrDefaultAsync(x => x.Id == record.Id))!;
+            return (await _unitOfWork.JoggingRepository.FirstOrDefaultAsync(x => x.Id == record.Id))!.ToResource();
         }
 
         public async Task DeleteRecord(int id)
