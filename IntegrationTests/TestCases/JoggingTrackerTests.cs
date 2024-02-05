@@ -120,7 +120,7 @@ namespace IntegrationTests.TestCases
         }
 
         [Fact, TestPriority(5)]
-        public async Task UsersController_DeleteUser_Return200Ok()
+        public async Task UsersController_DeleteUser_Return204NoContent()
         {
             //Act
             var response = await _client.DeleteAsync($"v1/api/users/{_userResource.Email}");
