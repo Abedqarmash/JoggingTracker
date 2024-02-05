@@ -137,6 +137,10 @@ namespace BusinessLogic.Users
                 throw new InvalidModelException(nameof(email),
                     ValidationMessages.UserWithEmailDoesNotExist(email));
 
+            if (!model.Email.Equals(email) && (await _userManager.FindByEmailAsync(model.Email)) is not null)
+                throw new InvalidModelException(nameof(email),
+                    ValidationMessages.UserWithEmailAlreadyExist(model.Email));
+
 
             updateModel.UserName = model.UserName;
             updateModel.Email = model.Email;

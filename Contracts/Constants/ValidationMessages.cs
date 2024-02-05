@@ -12,5 +12,6 @@
         public static string UserWithIdDoesNotExist(string id) => $"User with id: {id} does not exist";
         public static string RecordIdDoesNotExist(int id) => $"Record with id: {id} does not exist";
         public static string UserWithEmailOrUserNameAlreadyExist(string email, string username) => $"User with email: {email} or username: {username} already exist";
+        public static string UserWithEmailAlreadyExist(string email) => $"User with email: {email} already exist";
     }
 }
